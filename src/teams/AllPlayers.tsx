@@ -2,25 +2,30 @@ import { useLoaderData, useRouteError } from "react-router-dom";
 import React from "react";
 import { Player, supabaseClient } from "../db-client";
 import { PlayerItem } from "../components/PlayerItem";
+import {
+  IonPage,
+  IonHeader,
+  IonToolbar,
+  IonTitle,
+  IonContent,
+} from "@ionic/react";
 
 const AllPlayers = () => {
   const { allPlayers, errors } = useLoaderData();
   return (
-    <>
+    <div className="ion-padding">
       {allPlayers?.length ? (
         <div>
-          <div className="ui list divided">
             {allPlayers.map((p: Player) => (
               <PlayerItem player={p} />
             ))}
-          </div>
         </div>
       ) : (
         <p>
           No Players on Team <span style={{ fontWeight: "bold" }}></span>
         </p>
       )}{" "}
-    </>
+    </div>
   );
 };
 

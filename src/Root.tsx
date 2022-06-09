@@ -1,7 +1,19 @@
 import { useTransition } from "react";
 import * as React from "react";
-import { Outlet, useLoaderData, useRouteError } from "react-router-dom";
-import { CustomNavLink } from "./components/CustomNavLink";
+import {
+  Outlet,
+  useLoaderData,
+  useRouteError,
+  NavLink,
+} from "react-router-dom";
+import {
+  IonPage,
+  IonHeader,
+  IonToolbar,
+  IonTitle,
+  IonContent,
+  IonButton,
+} from "@ionic/react";
 
 let sleep = () => new Promise((r) => setTimeout(r, 300));
 
@@ -13,12 +25,25 @@ const Root = () => {
   let data = useLoaderData();
 
   return (
-    <div className="ui container" style={{ marginTop: 40 }}>
-      <CustomNavLink to="/teams" title="View Teams"></CustomNavLink>
-      <CustomNavLink to="/players" title="View All Players"></CustomNavLink>
-      <Header user={data.user} />
-      <Outlet />
-    </div>
+    <IonPage>
+      <IonHeader>
+        <IonToolbar>
+          <IonTitle>Ionic React w/Remix-Router</IonTitle>
+        </IonToolbar>
+      </IonHeader>
+      <IonContent class="ion-padding">
+        <div className="ui container" style={{ marginTop: 40 }}>
+          <NavLink to="/teams" title="View Teams">
+            <IonButton>View Teams</IonButton>
+          </NavLink>
+          <NavLink to="/players" title="View All Players">
+            <IonButton>View All Players</IonButton>
+          </NavLink>
+          <Header user={data.user} />
+          <Outlet />
+        </div>
+      </IonContent>
+    </IonPage>
   );
 };
 
@@ -41,10 +66,19 @@ const Error = () => {
   const error = useRouteError();
   console.log(error);
   return (
-    <div>
-      <h2>Error in Root</h2>
-      <p>{JSON.stringify(error)}</p>
-    </div>
+    <IonPage>
+      <IonHeader>
+        <IonToolbar>
+          <IonTitle>ERROR PAGE</IonTitle>
+        </IonToolbar>
+      </IonHeader>
+      <IonContent class="ion-padding">
+        <div>
+          <h2>Error in Root</h2>
+          <p>{JSON.stringify(error)}</p>
+        </div>
+      </IonContent>
+    </IonPage>
   );
 };
 
